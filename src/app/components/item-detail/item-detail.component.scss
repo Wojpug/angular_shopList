@@ -1,0 +1,8 @@
+.item-detail-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+.item-detail-container > * {
+    width: 100%;
+}

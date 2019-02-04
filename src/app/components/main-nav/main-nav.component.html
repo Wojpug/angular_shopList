@@ -1,0 +1,45 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="false"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="!(isHandset$ | async)">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <mat-list-item (click)="navigate('SKLEP')">
+        <a matLine href="#" >Sklep</a>
+      </mat-list-item>
+      <mat-list-item (click)="navigate('LISTA_ZAKUPOW')">
+        <a matLine href="#" >Lista zakupów</a>
+      </mat-list-item>
+      <mat-list-item (click)="toggleInShopMode()">
+        <img [src]="diode" width="10px" height="10px"/>
+        <a matLine href="#" >Tryb w sklepie</a>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <img src="../../../assets/shop_logo.png" width="40px" height="35px"/><span>Sklep</span>
+      <span class="main-nave-remaining-space"></span>
+      <label class="right">Wydano: {{totalSpent}}</label>
+    </mat-toolbar>
+      <div *ngIf="mode === 'SKLEP'" class="mat-app-background basic-container">
+        <app-shop-table [inShopMode]="inShopMode"></app-shop-table>
+      </div>
+      <div *ngIf="mode === 'LISTA_ZAKUPOW'" class="mat-app-background basic-container">
+        <app-user-items-table (showDetailsEmiter)="showDetailsEmiter($event)"></app-user-items-table>
+      </div>
+      <div *ngIf="mode === 'SZCZEGOLY_PRZEDMIOTU'" class="mat-app-background basic-container">
+        <app-item-detail [userItem]="itemDetails" (totalCountEmit)="addToTotal($event)"></app-item-detail>
+      </div>
+    <!-- Add Content Here -->
+  </mat-sidenav-content>
+</mat-sidenav-container>

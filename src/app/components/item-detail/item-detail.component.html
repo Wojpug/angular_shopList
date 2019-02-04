@@ -1,0 +1,24 @@
+<div class="item-detail-container">
+  <mat-form-field>
+    <input matInput placeholder="Nazwa" disabled [ngModel]="userItem.item.name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Cena" disabled [ngModel]="userItem.item.price" step="0.01" type="number">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Dostępna ilość" disabled [ngModel]="userItem.item.quantity">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Chcę kupić sztuk" [formControl]="quantity" [errorStateMatcher]="matcher" (keyup)="onlinePriceCount()">
+    <mat-error *ngIf="quantity.invalid">{{getQuantityErrorMessage()}}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Cena razem" disabled [ngModel]="totalprice" step="0.01" type="number">
+  </mat-form-field>
+
+  <button mat-button (click)="saveUserItem()" [disabled]="quantity.invalid">Kup</button>
+</div>
